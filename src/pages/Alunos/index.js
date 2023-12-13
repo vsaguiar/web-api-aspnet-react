@@ -13,7 +13,7 @@ export default function Alunos() {
                 <img src={logoCadastro} alt="Cadastro" />
                 <span className="me-2">Bem-vindo</span>
 
-                <Link className="button" to="aluno/novo">Novo Aluno</Link>
+                <Link className="button" to="/aluno/novo/0">Novo Aluno</Link>
                 <button type="button" title="Sair do Sistema">
                     <FiLogOut size={35} color="#17202a" />
                 </button>
