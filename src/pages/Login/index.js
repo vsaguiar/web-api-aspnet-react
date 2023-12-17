@@ -26,11 +26,9 @@ export default function Login() {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('expiration', response.data.expiration);
 
-            console.log('Redirecionando para /alunos');
             history('/alunos');
 
         } catch (error) {
-            console.error('Falha no login:', error);
             alert('Falha no login. \n' + error);
         }
     }

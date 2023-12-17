@@ -5,18 +5,22 @@
     margin: 20px auto;
 }
 
-.aluno-container header{
+/* .aluno-container header{
     display: flex;
     align-items: center;
-}
+} */
 
 .aluno-container header span{
     font-size: 20px;
-    margin-left: 25px;
 }
 
-.aluno-container header span strong{
-    color: #333333;
+.novoAluno {
+    display: inline-block !important;
+    background-color: #4acfd9 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    min-width: 150px !important;
+    border: transparent !important;
 }
 
 .aluno-container header img{
@@ -61,7 +65,7 @@
 
 .aluno-container ul {
     display: grid;
-    padding: 0 25px;
+    padding: 0 2px 25px;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 35px;
     list-style: none;
@@ -71,26 +75,23 @@
     background: #ffffff;
     padding: 10px;
     border-radius: 10px;
-    position: relative;
+    /* position: relative; */
 }
 
 .aluno-container ul li button {
-    position: absolute;
-    right: 25px;
-    top: 25px;
     border: 0;
     background: transparent;  
 }
 
-.aluno-container ul li button + button{
+/* .aluno-container ul li button + button{
     top: 50px;  
-}
+} */
 
 .aluno-container ul li button:hover{
     opacity: 0.8;  
 }
 
-.aluno-container ul li strong{
+/* .aluno-container ul li strong{
     display: block;
     margin-bottom: 16px;
     color: #41414D;
@@ -104,4 +105,22 @@
     color: #737380;
     line-height: 21px;
     font-size: 16px;
+} */
+
+@media (max-width: 632px) {
+    .aluno-container header span {
+        display: none;
+    }
+    .aluno-container header img {
+        display: none;
+    }
+}
+
+@media (max-width: 580px) {
+    .aluno-container ul {
+        padding: 0 2px 25px !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+        grid-gap: 15px !important;
+        list-style: none !important;
+    }
 }
