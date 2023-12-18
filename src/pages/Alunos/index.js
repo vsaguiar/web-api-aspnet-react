@@ -45,6 +45,14 @@ export default function Alunos() {
         }
     }
 
+    async function editarAluno(id) {
+        try {
+            history(`/aluno/novo/${id}`);
+        } catch (error) {
+            alert('Não foi possível editar o aluno. ' + error);
+        }
+    }
+
     return (
         <div className="aluno-container">
             <header>
@@ -92,7 +100,7 @@ export default function Alunos() {
                         <b><strong>E-mail:</strong> </b>{aluno.email}<br /><br />
                         <b><strong>Idade:</strong> </b>{aluno.idade}<br /><br />
 
-                        <button type="button" title="Editar">
+                        <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
                             <FiEdit size="25" color="#17202a" />
                         </button>
                         <button type="button" title="Excluir">
