@@ -9,13 +9,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Alunos() {
 
-    // const [nome, setNome] = useState('');
+    // filtrar dados
+    const [searchInput, setSearchInput] = useState('');
+    const [filtro, setFiltro] = useState('');
+
     const [alunos, setAlunos] = useState([]);
 
     const email = localStorage.getItem('email');
     const token = localStorage.getItem('token');
 
     const history = useNavigate();
+
+    const searchAlunos = (searchValue) => {
+        setSearchInput(searchValue);
+        if (searchInput !== '') {
+            const dadosFiltrados = alunos.filter((item) => {
+                return Object
+                    .values(item)
+                    .join('')
+                    .toLowerCase()
+                    .includes(searchInput.toLowerCase())
+            });
+            setFiltro(dadosFiltrados);
+        }
+        else {
+            setFiltro(alunos);
+        }
+    }
 
     useEffect(() => {
         const buscarAlunos = async () => {
@@ -78,14 +98,11 @@ export default function Alunos() {
 
             <form>
                 <div className="row">
-                    <div className="col-md-11 col-sm-10 col-10">
-                        <input type="text" placeholder="Filtrar por nome" />
+                    <div className="col-md-12 col-sm-10 col-10">
+                        <input type="text" placeholder="Filtrar por nome..."
+                            onChange={(e) => searchAlunos(e.target.value)} />
                     </div>
-                    <div className="col-md-1 col-sm-1 col-1 mt-4">
-                        <button type="button" title="Filtrar" style={{ marginTop: '-4px' }}>
-                            <BsSearch />
-                        </button>
-                    </div>
+
                 </div>
             </form>
 
@@ -93,22 +110,42 @@ export default function Alunos() {
             <br />
             <br />
             <h1>Relação de Alunos</h1>
-            <ul>
-                {alunos.map(aluno => (
-                    <li key={aluno.id}>
-                        <b><strong>Nome:</strong> </b>{aluno.nome}<br /><br />
-                        <b><strong>E-mail:</strong> </b>{aluno.email}<br /><br />
-                        <b><strong>Idade:</strong> </b>{aluno.idade}<br /><br />
+            {searchInput.length > 1 ? (
+                <ul>
+                    {filtro.map(aluno => (
+                        <li key={aluno.id}>
+                            <b><strong>Nome:</strong> </b>{aluno.nome}<br /><br />
+                            <b><strong>E-mail:</strong> </b>{aluno.email}<br /><br />
+                            <b><strong>Idade:</strong> </b>{aluno.idade}<br /><br />
 
-                        <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
-                            <FiEdit size="25" color="#17202a" />
-                        </button>
-                        <button type="button" title="Excluir">
-                            <FiUserX size="25" color="#17202a" />
-                        </button>
-                    </li>
-                ))}
-            </ul>
+                            <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
+                                <FiEdit size="25" color="#17202a" />
+                            </button>
+                            <button type="button" title="Excluir">
+                                <FiUserX size="25" color="#17202a" />
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <ul>
+                    {alunos.map(aluno => (
+                        <li key={aluno.id}>
+                            <b><strong>Nome:</strong> </b>{aluno.nome}<br /><br />
+                            <b><strong>E-mail:</strong> </b>{aluno.email}<br /><br />
+                            <b><strong>Idade:</strong> </b>{aluno.idade}<br /><br />
+
+                            <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
+                                <FiEdit size="25" color="#17202a" />
+                            </button>
+                            <button type="button" title="Excluir">
+                                <FiUserX size="25" color="#17202a" />
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+
         </div>
     );
 }
