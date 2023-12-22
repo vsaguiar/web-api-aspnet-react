@@ -3,7 +3,6 @@ import './style.css';
 import { Link, useNavigate } from "react-router-dom";
 import logoCadastro from '../../assets/novoAluno.png';
 import { FiLogOut, FiEdit, FiUserX } from 'react-icons/fi';
-import { BsSearch } from "react-icons/bs";
 import api from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -61,7 +60,7 @@ export default function Alunos() {
             localStorage.setItem('token', '');
             history('/');
         } catch (error) {
-            alert('Não foi possível sair do sistema. ' + error)
+            alert('Não foi possível sair do sistema. \n' + error)
         }
     }
 
@@ -69,7 +68,32 @@ export default function Alunos() {
         try {
             history(`/aluno/novo/${id}`);
         } catch (error) {
-            alert('Não foi possível editar o aluno. ' + error);
+            alert('Não foi possível editar o aluno. \n' + error);
+        }
+    }
+
+    async function deletarAluno(id) {
+        try {
+            const response = await api.get(`api/alunos/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.data && response.data.nome) {
+                const nome = response.data.nome;
+
+                if (window.confirm(`Deseja deletar o aluno ${nome} de ID = ${id}?`)) {
+                    await api.delete(`api/alunos/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    setAlunos(alunos.filter(aluno => aluno.id !== id));
+                }
+            }
+        } catch (error) {
+            alert('Não foi possível deletar o aluno. \n' + error)
         }
     }
 
@@ -121,7 +145,7 @@ export default function Alunos() {
                             <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
                                 <FiEdit size="25" color="#17202a" />
                             </button>
-                            <button type="button" title="Excluir">
+                            <button type="button" title="Excluir" onClick={() => deletarAluno(aluno.id)}>
                                 <FiUserX size="25" color="#17202a" />
                             </button>
                         </li>
@@ -138,7 +162,7 @@ export default function Alunos() {
                             <button onClick={() => editarAluno(aluno.id)} type="button" title="Editar">
                                 <FiEdit size="25" color="#17202a" />
                             </button>
-                            <button type="button" title="Excluir">
+                            <button type="button" title="Excluir" onClick={() => deletarAluno(aluno.id)}>
                                 <FiUserX size="25" color="#17202a" />
                             </button>
                         </li>
